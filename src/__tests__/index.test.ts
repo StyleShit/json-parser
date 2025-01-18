@@ -10,6 +10,16 @@ describe('JSON Parser', () => {
 		expect(parsed).toStrictEqual({ kind: 'null' });
 	});
 
+	it('should parse booleans', () => {
+		// Act.
+		const parsedTrue = parse('true');
+		const parsedFalse = parse('false');
+
+		// Assert.
+		expect(parsedTrue).toStrictEqual({ kind: 'boolean', value: true });
+		expect(parsedFalse).toStrictEqual({ kind: 'boolean', value: false });
+	});
+
 	it('should ignore whitespaces', () => {
 		// Act.
 		const parsed = parse('  \r \n \t null  \r \n \t ');
