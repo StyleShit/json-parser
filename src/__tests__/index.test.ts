@@ -10,10 +10,20 @@ describe('JSON Parser', () => {
 		expect(parsed).toStrictEqual({ kind: 'null' });
 	});
 
+	it('should ignore whitespaces', () => {
+		// Act.
+		const parsed = parse('  \r \n \t null  \r \n \t ');
+
+		// Assert.
+		expect(parsed).toStrictEqual({ kind: 'null' });
+	});
+
 	it('should throw when parsing unexpected input', () => {
 		// Assert.
 		expect(() => parse('invalid-json')).toThrowError(
 			"Unexpected 'i' at index 0",
 		);
+
+		expect(() => parse('null a')).toThrowError("Unexpected 'a' at index 5");
 	});
 });
