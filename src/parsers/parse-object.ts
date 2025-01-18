@@ -1,8 +1,8 @@
-import { createParser } from './create-parser';
-import { parseAST } from './parse-ast';
+import { createParser } from '../create-parser';
+import { parseAST } from '../parse-ast';
 import { parseString } from './parse-string';
-import { skipWhitespaces } from './skip-whitespaces';
-import type { AST } from './types';
+import { skipWhitespaces } from '../skip-whitespaces';
+import type { AST } from '../types';
 
 export type JSONObject = {
 	kind: 'object';

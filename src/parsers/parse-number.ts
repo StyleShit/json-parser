@@ -1,4 +1,4 @@
-import { createParser } from './create-parser';
+import { createParser } from '../create-parser';
 
 export type JSONNumber = {
 	kind: 'number';

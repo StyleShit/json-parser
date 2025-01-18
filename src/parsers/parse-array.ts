@@ -1,7 +1,7 @@
-import { createParser } from './create-parser';
-import { parseAST } from './parse-ast';
-import { skipWhitespaces } from './skip-whitespaces';
-import type { AST } from './types';
+import { createParser } from '../create-parser';
+import { parseAST } from '../parse-ast';
+import { skipWhitespaces } from '../skip-whitespaces';
+import type { AST } from '../types';
 
 export type JSONArray = {
 	kind: 'array';

@@ -1,9 +1,9 @@
-import { parseArray } from './parse-array';
-import { parseBoolean } from './parse-boolean';
-import { parseNull } from './parse-null';
-import { parseNumber } from './parse-number';
-import { parseObject } from './parse-object';
-import { parseString } from './parse-string';
+import { parseArray } from './parsers/parse-array';
+import { parseBoolean } from './parsers/parse-boolean';
+import { parseNull } from './parsers/parse-null';
+import { parseNumber } from './parsers/parse-number';
+import { parseObject } from './parsers/parse-object';
+import { parseString } from './parsers/parse-string';
 import type { NormalizedParser } from './types';
 
 const parsers = [
