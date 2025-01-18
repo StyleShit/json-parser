@@ -1,4 +1,4 @@
-export class UnexpectedEndOfInputError extends Error {
+export class UnexpectedEndOfInputError extends SyntaxError {
 	constructor() {
 		super('Unexpected end of input');
 	}

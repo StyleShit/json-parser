@@ -92,14 +92,14 @@ describe('JSON Parser', () => {
 
 		// Assert.
 		expect(() => parse('[123, "string", ,]')).toThrowError(
-			"Unexpected ',' at index 16",
+			new SyntaxError("Unexpected ',' at index 16"),
 		);
 	});
 
 	it('should throw for arrays without commas', () => {
 		// Act & Assert.
 		expect(() => parse('[123 "string"]')).toThrowError(
-			`Unexpected '"' at index 5`,
+			new SyntaxError(`Unexpected '"' at index 5`),
 		);
 	});
 
@@ -175,21 +175,21 @@ describe('JSON Parser', () => {
 
 		// Act & Assert.
 		expect(() => parse('{"key": 123, "key2": "string", ,}')).toThrowError(
-			"Unexpected ',' at index 31",
+			new SyntaxError("Unexpected ',' at index 31"),
 		);
 	});
 
 	it('should throw for objects without commas', () => {
 		// Act & Assert.
 		expect(() => parse('{"key": 123 "key-2": 456}')).toThrowError(
-			`Unexpected '"' at index 12`,
+			new SyntaxError(`Unexpected '"' at index 12`),
 		);
 	});
 
 	it('should throw for duplicate object keys', () => {
 		// Act & Assert.
 		expect(() => parse('{"key": 123, "key": 456}')).toThrowError(
-			"Duplicate key 'key' at index 13",
+			new SyntaxError("Duplicate key 'key' at index 13"),
 		);
 	});
 
@@ -216,18 +216,18 @@ describe('JSON Parser', () => {
 	it('should throw when parsing empty input', () => {
 		// Assert.
 		expect(() => parse('  \r \n \t ')).toThrowError(
-			'Unexpected end of input',
+			new SyntaxError('Unexpected end of input'),
 		);
 	});
 
 	it('should throw when parsing unexpected input', () => {
 		// Assert.
 		expect(() => parse('invalid-json')).toThrowError(
-			"Unexpected 'i' at index 0",
+			new SyntaxError("Unexpected 'i' at index 0"),
 		);
 
 		expect(() => parse('null true')).toThrowError(
-			"Unexpected 't' at index 5",
+			new SyntaxError("Unexpected 't' at index 5"),
 		);
 	});
 });
