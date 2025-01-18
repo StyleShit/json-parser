@@ -1,8 +1,19 @@
 import { describe, expect, it } from 'vitest';
-import helloWorld from '../index';
+import { parse } from '../index';
 
-describe('Hello World', () => {
-	it('should return "Hello World!"', () => {
-		expect(helloWorld()).toBe('Hello World!');
+describe('JSON Parser', () => {
+	it('should parse null', () => {
+		// Act.
+		const parsed = parse('null');
+
+		// Assert.
+		expect(parsed).toStrictEqual({ kind: 'null' });
+	});
+
+	it('should throw when parsing unexpected input', () => {
+		// Assert.
+		expect(() => parse('invalid-json')).toThrowError(
+			"Unexpected 'i' at index 0",
+		);
 	});
 });
