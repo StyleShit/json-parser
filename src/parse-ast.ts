@@ -2,30 +2,32 @@ import { parseArray } from './parse-array';
 import { parseBoolean } from './parse-boolean';
 import { parseNull } from './parse-null';
 import { parseNumber } from './parse-number';
+import { parseObject } from './parse-object';
 import { parseString } from './parse-string';
-import { skipWhitespaces } from './skip-whitespaces';
+import type { NormalizedParser } from './types';
+
+const parsers = [
+	parseNull,
+	parseBoolean,
+	parseNumber,
+	parseString,
+	parseArray,
+	parseObject,
+] satisfies NormalizedParser[];
 
 export function parseAST(json: string, index: number) {
-	index = skipWhitespaces(json, index);
+	let result: ReturnType<NormalizedParser> = {
+		value: null,
+		nextIndex: index,
+	};
 
-	const parsed =
-		parseNull(json, index) ??
-		parseBoolean(json, index) ??
-		parseNumber(json, index) ??
-		parseString(json, index) ??
-		parseArray(json, index);
+	for (const parser of parsers) {
+		result = parser(json, index);
 
-	if (!parsed) {
-		return {
-			nextIndex: index,
-			parsed: null,
-		};
+		if (result.value) {
+			return result;
+		}
 	}
 
-	index = skipWhitespaces(json, parsed.nextIndex);
-
-	return {
-		nextIndex: index,
-		parsed: parsed.value,
-	};
+	return result;
 }

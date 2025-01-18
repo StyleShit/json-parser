@@ -1,11 +1,11 @@
-import type { Parser } from './types';
+import { createParser } from './create-parser';
 
 export type JSONBoolean = {
 	kind: 'boolean';
 	value: boolean;
 };
 
-export const parseBoolean: Parser<JSONBoolean> = (json, index) => {
+export const parseBoolean = createParser<JSONBoolean>((json, index) => {
 	if (json.slice(index, index + 4) === 'true') {
 		return {
 			nextIndex: index + 4,
@@ -27,4 +27,4 @@ export const parseBoolean: Parser<JSONBoolean> = (json, index) => {
 	}
 
 	return null;
-};
+});

@@ -79,6 +79,96 @@ describe('JSON Parser', () => {
 		);
 	});
 
+	it('should parse objects', () => {
+		// Act.
+		const parsed = parse(
+			'{"key": 123, "key2": "string", "key3": null, "key4": { "key": true }}',
+		);
+
+		// Assert.
+		expect(parsed).toStrictEqual({
+			kind: 'object',
+			members: {
+				key: { kind: 'number', value: 123 },
+				key2: { kind: 'string', value: 'string' },
+				key3: { kind: 'null' },
+				key4: {
+					kind: 'object',
+					members: {
+						key: { kind: 'boolean', value: true },
+					},
+				},
+			},
+		});
+	});
+
+	it('should parse empty objects', () => {
+		// Act.
+		const parsed = parse('{}');
+		const parsedWithWhitespaces = parse('{ \t \n \r }');
+
+		// Assert.
+		expect(parsed).toStrictEqual({
+			kind: 'object',
+			members: {},
+		});
+
+		expect(parsedWithWhitespaces).toStrictEqual({
+			kind: 'object',
+			members: {},
+		});
+	});
+
+	it('should parse objects with whitespaces', () => {
+		// Act.
+		const parsed = parse(
+			'  {  \n "key"  \t : \n 123  ,  "key2"  \n :  \r "string"  ,   "key3"   :  null   }  ',
+		);
+
+		// Assert.
+		expect(parsed).toStrictEqual({
+			kind: 'object',
+			members: {
+				key: { kind: 'number', value: 123 },
+				key2: { kind: 'string', value: 'string' },
+				key3: { kind: 'null' },
+			},
+		});
+	});
+
+	it('should allow a single trailing comma in objects', () => {
+		// Act.
+		const parsed = parse('{"key": 123, "key2": "string",}');
+
+		// Assert.
+		expect(parsed).toStrictEqual({
+			kind: 'object',
+			members: {
+				key: { kind: 'number', value: 123 },
+				key2: { kind: 'string', value: 'string' },
+			},
+		});
+
+		// Act & Assert.
+		expect(() => parse('{"key": 123, "key2": "string", ,}')).toThrowError(
+			"Unexpected ',' at index 31",
+		);
+	});
+
+	it('should throw for objects without commas', () => {
+		// Act & Assert.
+		expect(() => parse('{"key": 123 "key-2": 456}')).toThrowError(
+			`Unexpected '"' at index 12`,
+		);
+	});
+
+	it('should throw for duplicate object keys', () => {
+		// Act & Assert.
+		expect(() => parse('{"key": 123, "key": 456}')).toThrowError(
+			"Duplicate key 'key' at index 13",
+		);
+	});
+
 	it('should ignore whitespaces', () => {
 		// Act.
 		const parsedNull = parse('  \r \n \t null  \r \n \t ');

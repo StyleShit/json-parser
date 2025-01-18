@@ -1,11 +1,11 @@
-import type { Parser } from './types';
+import { createParser } from './create-parser';
 
 export type JSONString = {
 	kind: 'string';
 	value: string;
 };
 
-export const parseString: Parser<JSONString> = (json, index) => {
+export const parseString = createParser<JSONString>((json, index) => {
 	if (json[index] !== '"') {
 		return null;
 	}
@@ -30,4 +30,4 @@ export const parseString: Parser<JSONString> = (json, index) => {
 	}
 
 	return null;
-};
+});

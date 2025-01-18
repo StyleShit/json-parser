@@ -1,11 +1,11 @@
-import type { Parser } from './types';
+import { createParser } from './create-parser';
 
 export type JSONNumber = {
 	kind: 'number';
 	value: number;
 };
 
-export const parseNumber: Parser<JSONNumber> = (json, index) => {
+export const parseNumber = createParser<JSONNumber>((json, index) => {
 	const isNumber = (index: number) => /\d/.test(json[index]);
 
 	if (!isNumber(index)) {
@@ -27,4 +27,4 @@ export const parseNumber: Parser<JSONNumber> = (json, index) => {
 			value: Number(value),
 		},
 	};
-};
+});

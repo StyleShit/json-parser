@@ -1,12 +1,13 @@
+import { createParser } from './create-parser';
 import { parseAST } from './parse-ast';
-import type { AST, Parser } from './types';
+import type { AST } from './types';
 
 export type JSONArray = {
 	kind: 'array';
 	members: AST[];
 };
 
-export const parseArray: Parser<JSONArray> = (json, index) => {
+export const parseArray = createParser<JSONArray>((json, index) => {
 	if (json[index] !== '[') {
 		return null;
 	}
@@ -26,7 +27,7 @@ export const parseArray: Parser<JSONArray> = (json, index) => {
 			};
 		}
 
-		const { parsed, nextIndex } = parseAST(json, index);
+		const { value: parsed, nextIndex } = parseAST(json, index);
 
 		if (!parsed) {
 			throw new Error(
@@ -44,4 +45,4 @@ export const parseArray: Parser<JSONArray> = (json, index) => {
 	}
 
 	return null;
-};
+});

@@ -5,7 +5,7 @@ export function parse(json: string) {
 		throw new Error('Unexpected end of input');
 	}
 
-	const { nextIndex: index, parsed } = parseAST(json, 0);
+	const { nextIndex: index, value: parsed } = parseAST(json, 0);
 
 	if (!parsed) {
 		throw new Error(
