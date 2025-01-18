@@ -1,4 +1,5 @@
 import { createParser } from '../create-parser';
+import { UnexpectedTokenError } from '../errors/unexpected-token-error';
 import { parseAST } from '../parse-ast';
 import { skipWhitespaces } from '../skip-whitespaces';
 import type { AST } from '../types';
@@ -31,9 +32,7 @@ export const parseArray = createParser<JSONArray>((json, index) => {
 		const { value: parsed, nextIndex } = parseAST(json, index);
 
 		if (!parsed) {
-			throw new Error(
-				`Unexpected '${json[nextIndex]}' at index ${String(nextIndex)}`,
-			);
+			throw new UnexpectedTokenError(json, nextIndex);
 		}
 
 		members.push(parsed);

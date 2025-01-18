@@ -3,6 +3,8 @@ import { parseAST } from '../parse-ast';
 import { parseString } from './parse-string';
 import { skipWhitespaces } from '../skip-whitespaces';
 import type { AST } from '../types';
+import { UnexpectedTokenError } from '../errors/unexpected-token-error';
+import { DuplicateKeyError } from '../errors/duplicate-key-error';
 
 export type JSONObject = {
 	kind: 'object';
@@ -32,9 +34,7 @@ export const parseObject = createParser<JSONObject>((json, index) => {
 		const parsedKey = parseString(json, index);
 
 		if (!parsedKey.value) {
-			throw new Error(
-				`Unexpected '${json[parsedKey.nextIndex]}' at index ${String(parsedKey.nextIndex)}`,
-			);
+			throw new UnexpectedTokenError(json, parsedKey.nextIndex);
 		}
 
 		const memberKey = parsedKey.value.value;
@@ -42,23 +42,17 @@ export const parseObject = createParser<JSONObject>((json, index) => {
 		if (memberKey in members) {
 			const keyIndex = parsedKey.nextIndex - memberKey.length - 2;
 
-			throw new Error(
-				`Duplicate key '${memberKey}' at index ${String(keyIndex)}`,
-			);
+			throw new DuplicateKeyError(memberKey, keyIndex);
 		}
 
 		if (json[parsedKey.nextIndex] !== ':') {
-			throw new Error(
-				`Unexpected '${json[parsedKey.nextIndex]}' at index ${String(parsedKey.nextIndex)}`,
-			);
+			throw new UnexpectedTokenError(json, parsedKey.nextIndex);
 		}
 
 		const parsedValue = parseAST(json, parsedKey.nextIndex + 1);
 
 		if (!parsedValue.value) {
-			throw new Error(
-				`Unexpected '${json[parsedValue.nextIndex]}' at index ${String(parsedValue.nextIndex)}`,
-			);
+			throw new UnexpectedTokenError(json, parsedValue.nextIndex);
 		}
 
 		members[memberKey] = parsedValue.value;
@@ -70,9 +64,7 @@ export const parseObject = createParser<JSONObject>((json, index) => {
 		}
 
 		if (json[index] !== ',') {
-			throw new Error(
-				`Unexpected '${json[index]}' at index ${String(index)}`,
-			);
+			throw new UnexpectedTokenError(json, index);
 		}
 
 		index++;
