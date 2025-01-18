@@ -1,6 +1,7 @@
 import { parseBoolean } from './parse-boolean';
 import { parseNull } from './parse-null';
 import { parseNumber } from './parse-number';
+import { parseString } from './parse-string';
 import { skipWhitespaces } from './skip-whitespaces';
 
 export function parse(json: string) {
@@ -31,7 +32,8 @@ function parseAST(json: string, index: number) {
 	const parsed =
 		parseNull(json, index) ??
 		parseBoolean(json, index) ??
-		parseNumber(json, index);
+		parseNumber(json, index) ??
+		parseString(json, index);
 
 	if (!parsed) {
 		return {

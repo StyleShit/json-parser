@@ -28,6 +28,17 @@ describe('JSON Parser', () => {
 		expect(parsed).toStrictEqual({ kind: 'number', value: 123 });
 	});
 
+	it('should parse strings', () => {
+		// Act.
+		const parsed = parse('"string \t with \r \n whitespaces"');
+
+		// Assert.
+		expect(parsed).toStrictEqual({
+			kind: 'string',
+			value: 'string \t with \r \n whitespaces',
+		});
+	});
+
 	it('should ignore whitespaces', () => {
 		// Act.
 		const parsed = parse('  \r \n \t null  \r \n \t ');
