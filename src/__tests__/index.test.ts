@@ -20,6 +20,14 @@ describe('JSON Parser', () => {
 		expect(parsedFalse).toStrictEqual({ kind: 'boolean', value: false });
 	});
 
+	it('should parse numbers', () => {
+		// Act.
+		const parsed = parse('123');
+
+		// Assert.
+		expect(parsed).toStrictEqual({ kind: 'number', value: 123 });
+	});
+
 	it('should ignore whitespaces', () => {
 		// Act.
 		const parsed = parse('  \r \n \t null  \r \n \t ');
