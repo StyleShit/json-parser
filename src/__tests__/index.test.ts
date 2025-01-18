@@ -60,6 +60,23 @@ describe('JSON Parser', () => {
 		});
 	});
 
+	it('should parse empty arrays', () => {
+		// Act.
+		const parsed = parse('[]');
+		const parsedWithWhitespaces = parse('[ \t \n \r ]');
+
+		// Assert.
+		expect(parsed).toStrictEqual({
+			kind: 'array',
+			members: [],
+		});
+
+		expect(parsedWithWhitespaces).toStrictEqual({
+			kind: 'array',
+			members: [],
+		});
+	});
+
 	it('should allow a single trailing comma in arrays', () => {
 		// Act.
 		const parsed = parse('[123, "string",]');

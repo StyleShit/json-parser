@@ -1,5 +1,6 @@
 import { createParser } from './create-parser';
 import { parseAST } from './parse-ast';
+import { skipWhitespaces } from './skip-whitespaces';
 import type { AST } from './types';
 
 export type JSONArray = {
@@ -12,7 +13,7 @@ export const parseArray = createParser<JSONArray>((json, index) => {
 		return null;
 	}
 
-	index++;
+	index = skipWhitespaces(json, index + 1);
 
 	const members: AST[] = [];
 
