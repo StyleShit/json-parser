@@ -39,9 +39,15 @@ export const parseArray = createParser<JSONArray>((json, index) => {
 
 		index = nextIndex;
 
-		if (json[index] === ',') {
-			index++;
+		if (json[index] === ']') {
+			continue;
 		}
+
+		if (json[index] !== ',') {
+			throw new UnexpectedTokenError(json, index);
+		}
+
+		index++;
 	}
 
 	return null;

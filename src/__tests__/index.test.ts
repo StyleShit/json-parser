@@ -96,6 +96,13 @@ describe('JSON Parser', () => {
 		);
 	});
 
+	it('should throw for arrays without commas', () => {
+		// Act & Assert.
+		expect(() => parse('[123 "string"]')).toThrowError(
+			`Unexpected '"' at index 5`,
+		);
+	});
+
 	it('should parse objects', () => {
 		// Act.
 		const parsed = parse(
