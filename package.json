@@ -1,6 +1,6 @@
 {
 	"name": "@styleshit/json-parser",
-	"description": "Simple JSON parser in TypeScript",
+	"description": "Simple JSON to AST parser in TypeScript",
 	"version": "0.0.0",
 	"author": "StyleShit",
 	"license": "MIT",
