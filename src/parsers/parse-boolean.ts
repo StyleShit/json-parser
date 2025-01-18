@@ -1,9 +1,5 @@
 import { createParser } from '../create-parser';
-
-export type JSONBoolean = {
-	kind: 'boolean';
-	value: boolean;
-};
+import type { JSONBoolean } from '../types';
 
 export const parseBoolean = createParser<JSONBoolean>((json, index) => {
 	if (json.slice(index, index + 4) === 'true') {

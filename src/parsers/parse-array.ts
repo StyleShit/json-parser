@@ -2,12 +2,7 @@ import { createParser } from '../create-parser';
 import { UnexpectedTokenError } from '../errors/unexpected-token-error';
 import { parseAST } from '../parse-ast';
 import { skipWhitespaces } from '../skip-whitespaces';
-import type { AST } from '../types';
-
-export type JSONArray = {
-	kind: 'array';
-	members: AST[];
-};
+import type { AST, JSONArray } from '../types';
 
 export const parseArray = createParser<JSONArray>((json, index) => {
 	if (json[index] !== '[') {

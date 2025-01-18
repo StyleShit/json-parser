@@ -1,10 +1,3 @@
-import type { JSONArray } from './parsers/parse-array';
-import type { JSONBoolean } from './parsers/parse-boolean';
-import type { JSONNull } from './parsers/parse-null';
-import type { JSONNumber } from './parsers/parse-number';
-import type { JSONObject } from './parsers/parse-object';
-import type { JSONString } from './parsers/parse-string';
-
 export type AST =
 	| JSONNull
 	| JSONBoolean
@@ -12,6 +5,35 @@ export type AST =
 	| JSONString
 	| JSONArray
 	| JSONObject;
+
+export type JSONNull = {
+	kind: 'null';
+};
+
+export type JSONBoolean = {
+	kind: 'boolean';
+	value: boolean;
+};
+
+export type JSONNumber = {
+	kind: 'number';
+	value: number;
+};
+
+export type JSONString = {
+	kind: 'string';
+	value: string;
+};
+
+export type JSONArray = {
+	kind: 'array';
+	members: AST[];
+};
+
+export type JSONObject = {
+	kind: 'object';
+	members: Record<string, AST>;
+};
 
 export type Parser<T extends AST> = (
 	json: string,

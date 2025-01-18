@@ -1,8 +1,5 @@
 import { createParser } from '../create-parser';
-
-export type JSONNull = {
-	kind: 'null';
-};
+import type { JSONNull } from '../types';
 
 export const parseNull = createParser<JSONNull>((json, index) => {
 	if (json.slice(index, index + 4) === 'null') {

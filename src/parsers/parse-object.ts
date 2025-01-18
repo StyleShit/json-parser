@@ -2,14 +2,9 @@ import { createParser } from '../create-parser';
 import { parseAST } from '../parse-ast';
 import { parseString } from './parse-string';
 import { skipWhitespaces } from '../skip-whitespaces';
-import type { AST } from '../types';
+import type { AST, JSONObject } from '../types';
 import { UnexpectedTokenError } from '../errors/unexpected-token-error';
 import { DuplicateKeyError } from '../errors/duplicate-key-error';
-
-export type JSONObject = {
-	kind: 'object';
-	members: Record<string, AST>;
-};
 
 export const parseObject = createParser<JSONObject>((json, index) => {
 	if (json[index] !== '{') {

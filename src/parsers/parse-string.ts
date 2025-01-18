@@ -1,9 +1,5 @@
 import { createParser } from '../create-parser';
-
-export type JSONString = {
-	kind: 'string';
-	value: string;
-};
+import type { JSONString } from '../types';
 
 export const parseString = createParser<JSONString>((json, index) => {
 	if (json[index] !== '"') {
