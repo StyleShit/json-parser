@@ -3,7 +3,7 @@ import { parseNull } from './parse-null';
 import { skipWhitespaces } from './skip-whitespaces';
 
 export function parse(json: string) {
-	if (json.length === 0) {
+	if (json.trim().length === 0) {
 		throw new Error('Unexpected end of input');
 	}
 

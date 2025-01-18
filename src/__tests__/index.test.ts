@@ -28,12 +28,21 @@ describe('JSON Parser', () => {
 		expect(parsed).toStrictEqual({ kind: 'null' });
 	});
 
+	it('should throw when parsing empty input', () => {
+		// Assert.
+		expect(() => parse('  \r \n \t ')).toThrowError(
+			'Unexpected end of input',
+		);
+	});
+
 	it('should throw when parsing unexpected input', () => {
 		// Assert.
 		expect(() => parse('invalid-json')).toThrowError(
 			"Unexpected 'i' at index 0",
 		);
 
-		expect(() => parse('null a')).toThrowError("Unexpected 'a' at index 5");
+		expect(() => parse('null true')).toThrowError(
+			"Unexpected 't' at index 5",
+		);
 	});
 });
